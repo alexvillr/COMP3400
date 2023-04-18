@@ -26,4 +26,10 @@ For example,
 --}
 
 shortest :: [[a]] -> Maybe [a]
-shortest = undefined
+shortest [] = Nothing
+shortest (x:xs) = hshortest xs x
+  where
+    hshortest [] shortestSoFar = Just shortestSoFar
+    hshortest (y:ys) shortestSoFar
+      | length y < length shortestSoFar = hshortest ys y
+      | otherwise                       = hshortest ys shortestSoFar
