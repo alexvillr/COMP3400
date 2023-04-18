@@ -31,22 +31,49 @@ Note that this solution is not unique. Any valid solution will be accepted.
 
 --}
 
+powsOfFour = [0] ++ (map (round) (zipWith (^^) (repeat 4) [0..]))
+
 tile :: Int -> [[Int]]
-tile 0 = [[0]]     -- define vacuous case
-tile 1 = [[0, 1]   -- define nth case
-         ,[1, 1]]
-tile n = undefined -- recursive step
+tile n = map (map (\y -> if y == -1 then 0 else y)) (htile n 1)
 
 
 htile :: Int -> Int -> [[Int]]
-htile 0 0 = [[0]]
-htile _ _ = undefined
+htile 1 1   = [[0]]
+htile 2 acc = [[-1, acc], [acc, acc]]
+htile size acc = combine topLeft topRight bottomLeft bottomRight (acc + 4 * (sum (take (size - 1) powsOfFour)))
+  where
+    topLeft     = htile (size - 1) (acc + 0 * (sum (take (size - 1) powsOfFour)))
+    topRight    = flipx (htile (size - 1) (acc + 1 * (sum (take (size - 1) powsOfFour))))
+    bottomLeft  = flipy (htile (size - 1) (acc + 2 * (sum (take (size - 1) powsOfFour))))
+    bottomRight = htile (size - 1) (acc + 3 * (sum (take (size - 1) powsOfFour)))
 
+-- flips the grid in the x direction
 flipx :: [[Int]] -> [[Int]]
-flipx = undefined
+flipx = reverse
 
+-- flips the grid in the y direction
 flipy :: [[Int]] -> [[Int]]
-flipy = undefined
+flipy [last] = [reverse last]
+flipy (row:rest) = reverse row : flipy rest
 
-combine :: [[Int]] -> [[Int]] -> [[Int]] -> [[Int]] -> [[Int]]
-combine ws xs ys zs = undefined
+-- combines the 4 grids into 1
+combine :: [[Int]] -> [[Int]] -> [[Int]] -> [[Int]] -> Int -> [[Int]]
+combine xs ys zs ws acc = insertPiece combined newID
+  where
+    insertPiece grid id = [-1 : drop 1 (head insertedGraph)] ++ tail insertedGraph
+      where
+        insertedGraph = map (map (\y -> if y == -1 then id else y)) grid
+    combined = zipWith (++) xs ys ++ zipWith (++) zs ws
+    newID
+      | acc < 5   = 0
+      | otherwise = acc
+
+-- prettyPrint :: [[Int]] -> IO ()
+-- prettyPrint matrix = mapM_ putStrLn (map showRow matrix)
+--   where
+--     showRow row = "[" ++ intercalate ", " (map showWithoutQuotes row) ++ "]"
+--     showWithoutQuotes n = replicate (maxWidth - length str) ' ' ++ str
+--       where
+--         str = show n
+--     maxWidth = maximum (map (length . show) (concat matrix))
+
