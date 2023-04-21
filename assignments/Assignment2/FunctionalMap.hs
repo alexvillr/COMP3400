@@ -31,40 +31,47 @@ newtype FunMap k v
 -- A function which returns an empty map (a map with no keys and values):
 
 empty :: FunMap k v
-empty = undefined
+empty = FunMap (const Nothing)
 
 -- A function to search elements in the map by key.
 -- If there is an element associated with the given key, the function should return Just element.
 -- Otherwise it should return Nothing.
 
 lookup :: Eq k => k -> FunMap k v -> Maybe v
-lookup = undefined
+lookup k (FunMap func) = func k
 
 -- A function to insert an element into the map and associate it with the given key.
 -- If there already IS an element associated with that key, overwrite it.
 
 insert :: Eq k => k -> v -> FunMap k v -> FunMap k v
-insert = undefined
+insert key value (FunMap func) = FunMap (\k -> if k == key then Just value else func k)
 
 -- A function to remove the element and the associated key from the map.
 -- If there was no element associated with the key, return the map unchanged.
 
 delete :: Eq k => k -> FunMap k v -> FunMap k v
-delete = undefined
+delete key (FunMap func) = FunMap (\k -> if k == key then Nothing else func k)
 
 -- A function to construct a map from a list of key-value pairs.
 -- If there are several values associated with the same key in the list,
 -- the last one that appears in the list should be stored in the map.
 
 fromList :: Eq k => [(k,v)] -> FunMap k v
-fromList = undefined
+fromList [] = empty
+fromList ((key, value):xs) = insert key value (fromList xs)
 
 -- Part 2.
 --
 -- Implement the Functor instance for this map:
 
 instance Functor (FunMap k) where
-    fmap = undefined
+    -- fmap :: (a -> b) -> FunMap k a -> FunMap k b
+    fmap f (FunMap func) = FunMap newfunc
+      where
+        newfunc k = case func k of
+          Nothing -> Nothing
+          Just value -> Just (f value)
+
 
 -- fmap should only change elements (values) in the map applying the provided function to them.
 -- It should not change keys nor the structure of the map.
@@ -76,7 +83,7 @@ instance Functor (FunMap k) where
 -- Implement function
 
 changeCurrency :: (Int -> Int) -> FunMap String Int -> FunMap String Int
-changeCurrency = undefined
+changeCurrency = fmap
 
 -- Students’ marks are stored in the grading system in FunMap String Int where
 -- String represents student’s name and Int represents their mark in the range [0, 100].
@@ -91,5 +98,13 @@ changeCurrency = undefined
 -- 0 <= mark <= 16 -> ‘F’
 
 convertMarks :: FunMap String Int -> FunMap String Char
-convertMarks = undefined
-
+convertMarks = fmap toGrade
+  where
+    toGrade :: Int -> Char
+    toGrade x
+      | (&&) ((<=) x 100) ((>=) x 84) = 'A'
+      | (&&) ((<=) x 83)  ((>=) x 67) = 'B'
+      | (&&) ((<=) x 66)  ((>=) x 50) = 'C'
+      | (&&) ((<=) x 49)  ((>=) x 34) = 'D'
+      | (&&) ((<=) x 33)  ((>=) x 17) = 'E'
+      | (&&) ((<=) x 16)  ((>=) x 0)  = 'F'

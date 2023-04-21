@@ -121,4 +121,39 @@ Implement the following function.
 --}
 
 evaluate :: Expr -> Maybe Int
-evaluate = undefined
+evaluate (Num num) = Just num
+evaluate (Add a b)
+  | (evaluate a) == Nothing = Nothing
+  | (evaluate b) == Nothing = Nothing
+  | otherwise               = Just ((+) numa numb)
+  where
+   (Just numa) = evaluate a
+   (Just numb) = evaluate b
+evaluate (Logical bl) = Nothing
+evaluate (Div a b)
+  | (evaluate a) == Nothing = Nothing
+  | (evaluate b) == Nothing = Nothing
+  | evaluate b == Just 0    = Nothing
+  | otherwise               = Just (div numa numb)
+  where
+   (Just numa) = evaluate a
+   (Just numb) = evaluate b
+evaluate (Less a b) = Nothing
+evaluate (If condition yes no)
+  | (evaluateBool condition) == Nothing    = Nothing
+  | evaluateBool condition == Just True  = evaluate yes
+  | evaluateBool condition == Just False = evaluate no
+
+evaluateBool :: Expr -> Maybe Bool
+evaluateBool (Logical val)
+  | val          = Just True
+  | not val      = Just False
+  | otherwise    = Nothing
+evaluateBool (Less a b)
+  | (evaluate a) == Nothing = Nothing
+  | (evaluate b) == Nothing = Nothing
+  | otherwise               = Just ((<) numa numb)
+  where
+   (Just numa) = evaluate a
+   (Just numb) = evaluate b
+evaluateBool _ = Nothing
