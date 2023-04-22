@@ -35,7 +35,9 @@ Note that this solution is not unique. Any valid solution will be accepted.
 powsOfFour = 0 : map (round . (^^) 4) [0..]
 
 tile :: Int -> [[Int]]
-tile n = map (map (\y -> if y == -1 then 0 else y)) (htile n 1)
+tile n 
+  | n >= 1 = map (map (\y -> if y == -1 then 0 else y)) (htile n 1)
+  | otherwise = []
 
 
 htile :: Int -> Int -> [[Int]]
