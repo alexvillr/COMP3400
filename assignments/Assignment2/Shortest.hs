@@ -27,9 +27,12 @@ For example,
 
 shortest :: [[a]] -> Maybe [a]
 shortest [] = Nothing
-shortest (x:xs) = hshortest xs x
+shortest [xs] = Just xs
+shortest xss = Just (xss !! ((fst (head winner)) - 1))
   where
-    hshortest [] shortestSoFar = Just shortestSoFar
-    hshortest (y:ys) shortestSoFar
-      | length y < length shortestSoFar = hshortest ys y
-      | otherwise                       = hshortest ys shortestSoFar
+    winner = hshortest (zipWith (,) [1..] xss)
+    hshortest plist = if (not (null emptyList)) 
+        then emptyList 
+        else hshortest (map (\(index, list) -> (index, tail list)) plist)
+          where
+            emptyList = filter (null . snd) plist
