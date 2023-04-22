@@ -36,19 +36,19 @@ powsOfFour = 0 : map (round . (^^) 4) [0..]
 
 tile :: Int -> [[Int]]
 tile n 
-  | n >= 1 = map (map (\y -> if y == -1 then 0 else y)) (htile n 1)
-  | otherwise = []
+  | n < 0 = [] 
+  | otherwise = map (map (\y -> if y == -1 then 0 else y)) (htile n 1)
 
 
 htile :: Int -> Int -> [[Int]]
-htile 1 1   = [[0]]
-htile 2 acc = [[-1, acc], [acc, acc]]
+htile 0 1   = [[0]]
+htile 1 acc = [[-1, acc], [acc, acc]]
 htile size acc = combine topLeft topRight bottomLeft bottomRight (acc + 4 * sum (take (size - 1) powsOfFour))
   where
-    topLeft     = htile (size - 1) (acc + 0 * sum (take (size - 1) powsOfFour))
-    topRight    = flipx (htile (size - 1) (acc + 1 * sum (take (size - 1) powsOfFour)))
-    bottomLeft  = flipy (htile (size - 1) (acc + 2 * sum (take (size - 1) powsOfFour)))
-    bottomRight = htile (size - 1) (acc + 3 * sum (take (size - 1) powsOfFour))
+    topLeft     = htile (size - 1) (acc + 0 * sum (take size powsOfFour))
+    topRight    = flipx (htile (size - 1) (acc + 1 * sum (take size powsOfFour)))
+    bottomLeft  = flipy (htile (size - 1) (acc + 2 * sum (take size powsOfFour)))
+    bottomRight = htile (size - 1) (acc + 3 * sum (take size powsOfFour))
 
 -- flips the grid in the x direction
 flipx :: [[Int]] -> [[Int]]
