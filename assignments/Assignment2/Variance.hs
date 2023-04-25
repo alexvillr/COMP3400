@@ -36,12 +36,14 @@ htrMean _ avg []     = avg
 htrMean n avg (x:xs) = htrMean (n + 1) ((x + n * avg) / (n + 1)) xs
 
 {--
-Variance_{n+1} = \frac{(n Variance_{n}) + (n xbar^2_{n}) + (x^2_{n+1})}{n + 1} - xbar^2_{n+a}
+Variance_{n+1} = \frac{(n Variance^2_{n}) + (n xbar^2_{n}) + (x^2_{n+1})}{n + 1} - xbar^2_{n+1}
 --}
 
 trVariance :: Float -> Float -> Float -> [Float] -> Float
 trVariance _ _ s [x]      = s
-trVariance n avg s (x:xs) = trVariance (n + 1) (trMean xs) ((((n * (s ** 2)) + (n * (avg ** 2)) + (x ** 2)) / (n + 1)) - trMean xs) xs
+trVariance n avg s (x:xs) = trVariance (n + 1) (avgnplus1) ((((n * (s + (avg ** 2))) + (x ** 2)) / (n + 1)) - (avgnplus1 ** 2)) xs
+  where
+    avgnplus1 = htrMean (n + 1) avg [x]
 
 variance :: [Float] -> Float
 variance [] = undefined
