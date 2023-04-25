@@ -1,14 +1,50 @@
 module Variance where
 
+lcMean :: [Float] -> Float
+lcMean [] = undefined
+lcMean [x] = x
+lcMean (x:xs) = (x + n * average) / (n + 1)
+  where
+    average = lcMean xs
+    n       = fromIntegral (length xs)
+
 lcVariance :: [Float] -> Float
 lcVariance [] = undefined
-lcVariance _  = undefined
--- lcVariance (x:xs)= lcVariance xs
+lcVariance [x]  = 0
+lcVariance (x:xs)= (/) ((+) ((+) ((*) n (lcVariance xs)) ((*) n ((** 2) (lcMean xs)))) ((** 2) x)) (n + 1) - lcMean (x:xs) **2
+  where
+    n = fromIntegral (length xs)
+
+{- 
+ - __Iteration invariant:__
+ -
+ - h_trMean n avg xs = (Something that should be the average of xs ++ (previous list))
+ -
+ - h_trMean n avg xs = ((n * avg) + sum(xs)) / (n + length xs)
+ -
+ - h_trMean 0 0 xs = (0 * 0 + sum xs) / (0 + length xs)
+ -                 = (sum xs) / (length xs)
+ -                 = mean xs
+ -}
+
+trMean :: [Float] -> Float
+trMean [] = undefined
+trMean xs = htrMean 0 0 xs
+
+htrMean :: Float -> Float -> [Float] -> Float
+htrMean _ avg []     = avg
+htrMean n avg (x:xs) = htrMean (n + 1) ((x + n * avg) / (n + 1)) xs
+
+{--
+Variance_{n+1} = \frac{(n Variance_{n}) + (n xbar^2_{n}) + (x^2_{n+1})}{n + 1} - xbar^2_{n+a}
+--}
 
 trVariance :: Float -> Float -> Float -> [Float] -> Float
-trVariance = undefined
+trVariance _ _ s [x]      = s
+trVariance n avg s (x:xs) = trVariance (n + 1) (trMean xs) ((((n * (s ** 2)) + (n * (avg ** 2)) + (x ** 2)) / (n + 1)) - trMean xs) xs
 
 variance :: [Float] -> Float
-variance = undefined
+variance [] = undefined
+variance xs = trVariance 0 0 0 xs
 
 
