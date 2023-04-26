@@ -15,6 +15,17 @@ lcVariance (x:xs)= (/) ((+) ((+) ((*) n (lcVariance xs)) ((*) n ((** 2) (lcMean 
   where
     n = fromIntegral (length xs)
 
+trMean :: [Float] -> Float
+trMean [] = undefined
+trMean xs = htrMean 0 0 xs
+
+htrMean :: Float -> Float -> [Float] -> Float
+htrMean _ avg []     = avg
+htrMean n avg (x:xs) = htrMean n' avg' xs
+  where
+    n'   = n + 1
+    avg' = (x + (avg * n)) / (n + 1)
+
 {- 
  - __Iteration invariant:__
  -
@@ -27,26 +38,29 @@ lcVariance (x:xs)= (/) ((+) ((+) ((*) n (lcVariance xs)) ((*) n ((** 2) (lcMean 
  -                 = mean xs
  -}
 
-trMean :: [Float] -> Float
-trMean [] = undefined
-trMean xs = htrMean 0 0 xs
-
-htrMean :: Float -> Float -> [Float] -> Float
-htrMean _ avg []     = avg
-htrMean n avg (x:xs) = htrMean (n + 1) ((x + n * avg) / (n + 1)) xs
-
-{--
-Variance_{n+1} = \frac{(n Variance^2_{n}) + (n xbar^2_{n}) + (x^2_{n+1})}{n + 1} - xbar^2_{n+1}
---}
-
 trVariance :: Float -> Float -> Float -> [Float] -> Float
-trVariance _ _ s [x]      = s
-trVariance n avg s (x:xs) = trVariance (n + 1) (avgnplus1) ((((n * (s + (avg ** 2))) + (x ** 2)) / (n + 1)) - (avgnplus1 ** 2)) xs
+trVariance _ _ s []      = s
+trVariance n avg s (x:xs) = trVariance n' avg' s' xs
   where
-    avgnplus1 = htrMean (n + 1) avg [x]
+    n'   = n + 1
+    avg' = htrMean n avg [x]
+    s'   = ((n * (s + (avg ** 2)) + (x ** 2)) / (n + 1)) - (avg' ** 2)
 
 variance :: [Float] -> Float
 variance [] = undefined
 variance xs = trVariance 0 0 0 xs
 
-
+{- 
+ - __Iteration invariant:__
+ -
+ - trVariance n avg s xs = (Something that should be the variance of xs ++ (previous list))
+ -
+ - trVariance n avg s xs = ((n * (s + (avg ** 2)) + (x ** 2)) / (n + 1)) - (avg' ** 2)
+ -
+ - trVariance 0 0 0 (x:xs) = ((0 * (0 + (0 ** 2)) + (x ** 2)) / 1) - (htrMean 0 0 [x] ** 2)
+ -                         = (x ** 2) - (avg x)
+ -                         = 0
+ -
+ -
+ - trVariance n avg s (x:xs) = 
+ -}
