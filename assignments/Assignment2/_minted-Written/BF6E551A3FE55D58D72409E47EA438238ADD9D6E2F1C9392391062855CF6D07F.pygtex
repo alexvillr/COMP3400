@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nf}{variance}\PYG{+w}{ }\PYG{o+ow}{::}\PYG{+w}{ }\PYG{p}{[}\PYG{k+kt}{Float}\PYG{p}{]}\PYG{+w}{ }\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{+w}{ }\PYG{k+kt}{Float}
+\PYG{n+nf}{variance}\PYG{+w}{ }\PYG{k+kt}{[]}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{undefined}
+\PYG{n+nf}{variance}\PYG{+w}{ }\PYG{n}{xs}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{trVariance}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{+w}{ }\PYG{n}{xs}
+\end{Verbatim}

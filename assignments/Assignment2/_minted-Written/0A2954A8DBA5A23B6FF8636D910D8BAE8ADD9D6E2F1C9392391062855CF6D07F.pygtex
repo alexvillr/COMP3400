@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nf}{lcMean}\PYG{+w}{ }\PYG{o+ow}{::}\PYG{+w}{ }\PYG{p}{[}\PYG{k+kt}{Float}\PYG{p}{]}\PYG{+w}{ }\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{+w}{ }\PYG{k+kt}{Float}
+\PYG{n+nf}{lcMean}\PYG{+w}{ }\PYG{k+kt}{[]}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{undefined}
+\PYG{n+nf}{lcMean}\PYG{+w}{ }\PYG{p}{[}\PYG{n}{x}\PYG{p}{]}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{x}
+\PYG{n+nf}{lcMean}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{x}\PYG{k+kt}{:}\PYG{n}{xs}\PYG{p}{)}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{x}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{n}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{average}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{n}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{+w}{  }\PYG{k+kr}{where}
+\PYG{+w}{    }\PYG{n}{average}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{lcMean}\PYG{+w}{ }\PYG{n}{xs}
+\PYG{+w}{    }\PYG{n}{n}\PYG{+w}{       }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{fromIntegral}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{length}\PYG{+w}{ }\PYG{n}{xs}\PYG{p}{)}
+
+\PYG{n+nf}{lcVariance}\PYG{+w}{ }\PYG{o+ow}{::}\PYG{+w}{ }\PYG{p}{[}\PYG{k+kt}{Float}\PYG{p}{]}\PYG{+w}{ }\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{+w}{ }\PYG{k+kt}{Float}
+\PYG{n+nf}{lcVariance}\PYG{+w}{ }\PYG{k+kt}{[]}\PYG{+w}{     }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{undefined}
+\PYG{n+nf}{lcVariance}\PYG{+w}{ }\PYG{p}{[}\PYG{n}{x}\PYG{p}{]}\PYG{+w}{    }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\PYG{n+nf}{lcVariance}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{x}\PYG{k+kt}{:}\PYG{n}{xs}\PYG{p}{)}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{p}{(((}\PYG{n}{n}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{s\PYGZsq{}}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{n}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{avg}\PYG{+w}{ }\PYG{o}{**}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{))}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{x}\PYG{+w}{ }\PYG{o}{**}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{))}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{n}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{))}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{avg\PYGZsq{}}\PYG{+w}{ }\PYG{o}{**}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{+w}{  }\PYG{k+kr}{where}
+\PYG{+w}{    }\PYG{n}{avg}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{lcMean}\PYG{+w}{ }\PYG{n}{xs}
+\PYG{+w}{    }\PYG{n}{avg\PYGZsq{}}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{lcMean}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{x}\PYG{k+kt}{:}\PYG{n}{xs}\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{s\PYGZsq{}}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{lcVariance}\PYG{+w}{ }\PYG{n}{xs}
+\PYG{+w}{    }\PYG{n}{n}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{fromIntegral}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{length}\PYG{+w}{ }\PYG{n}{xs}\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,28 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Var(X) \PYGZgt{} 0}
+\PYG{n+nf}{property1}\PYG{+w}{ }\PYG{o+ow}{::}\PYG{+w}{ }\PYG{k+kt}{IO}\PYG{n+nb}{()}
+\PYG{n+nf}{property1}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{quickCheck}\PYG{+w}{ }\PYG{o}{\PYGZdl{}}\PYG{+w}{ }\PYG{n+nf}{\PYGZbs{}}\PYG{n}{xs}\PYG{+w}{ }\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{null}\PYG{+w}{ }\PYG{n}{xs}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{n}{variance}\PYG{+w}{ }\PYG{n}{xs}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{l+m+mi}{0}
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Var(X + c) = Var(X), where c is some constant.}
+\PYG{n+nf}{property2}\PYG{+w}{ }\PYG{o+ow}{::}\PYG{+w}{ }\PYG{k+kt}{IO}\PYG{n+nb}{()}
+\PYG{n+nf}{property2}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{quickCheck}\PYG{+w}{ }\PYG{o}{\PYGZdl{}}\PYG{+w}{ }\PYG{n+nf}{\PYGZbs{}}\PYG{n}{a}\PYG{+w}{ }\PYG{n}{xs}\PYG{+w}{ }\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{null}\PYG{+w}{ }\PYG{n}{xs}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{n}{diff}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+m+mi}{10}\PYG{o}{**}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{+w}{  }\PYG{k+kr}{where}
+\PYG{+w}{    }\PYG{n}{diff}\PYG{+w}{    }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{abs}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{variance}\PYG{+w}{ }\PYG{n}{xsplusa}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{variance}\PYG{+w}{ }\PYG{n}{xs}\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{xsplusa}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{map}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{+}\PYG{+w}{ }\PYG{n}{a}\PYG{p}{)}\PYG{+w}{ }\PYG{n}{xs}
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Var(aX) = a\PYGZca{}2 * Var(X), where a is some constant.}
+\PYG{n+nf}{property3}\PYG{+w}{ }\PYG{o+ow}{::}\PYG{+w}{ }\PYG{k+kt}{IO}\PYG{n+nb}{()}
+\PYG{n+nf}{property3}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{quickCheck}\PYG{+w}{ }\PYG{o}{\PYGZdl{}}\PYG{+w}{ }\PYG{n+nf}{\PYGZbs{}}\PYG{n}{a}\PYG{+w}{ }\PYG{n}{xs}\PYG{+w}{ }\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{null}\PYG{+w}{ }\PYG{n}{xs}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{n}{diff}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+m+mi}{10}\PYG{o}{**}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{+w}{  }\PYG{k+kr}{where}
+\PYG{+w}{    }\PYG{n}{diff}\PYG{+w}{             }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{abs}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{atimesxsvar}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{asquaredtimesvar}\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{atimesxsvar}\PYG{+w}{      }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{variance}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{map}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{a}\PYG{+w}{ }\PYG{o}{*}\PYG{p}{)}\PYG{+w}{ }\PYG{n}{xs}\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{asquaredtimesvar}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{a}\PYG{+w}{ }\PYG{o}{**}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{variance}\PYG{+w}{ }\PYG{n}{xs}
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} Var(aX + b) = a\PYGZca{}2 * Var(X), the result of the previous two properties combined.}
+\PYG{n+nf}{property4}\PYG{+w}{ }\PYG{o+ow}{::}\PYG{+w}{ }\PYG{k+kt}{IO}\PYG{n+nb}{()}
+\PYG{n+nf}{property4}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{quickCheck}\PYG{+w}{ }\PYG{o}{\PYGZdl{}}\PYG{+w}{ }\PYG{n+nf}{\PYGZbs{}}\PYG{n}{a}\PYG{+w}{ }\PYG{n}{b}\PYG{+w}{ }\PYG{n}{xs}\PYG{+w}{ }\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{null}\PYG{+w}{ }\PYG{n}{xs}\PYG{+w}{ }\PYG{o}{||}\PYG{+w}{ }\PYG{n}{diff}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{l+m+mi}{10}\PYG{o}{**}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{+w}{  }\PYG{k+kr}{where}
+\PYG{+w}{    }\PYG{n}{diff}\PYG{+w}{             }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{abs}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{atimesxsplusbvar}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{asquaredtimesvar}\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{atimesxsplusbvar}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{n}{variance}\PYG{+w}{ }\PYG{n}{map}\PYG{+w}{ }\PYG{p}{(}\PYG{n+nf}{\PYGZbs{}}\PYG{n}{x}\PYG{+w}{ }\PYG{o+ow}{\PYGZhy{}\PYGZgt{}}\PYG{+w}{ }\PYG{n}{a}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{x}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{b}\PYG{p}{)}\PYG{+w}{ }\PYG{n}{xs}
+\PYG{+w}{    }\PYG{n}{asquaredtimesvar}\PYG{+w}{ }\PYG{o+ow}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{a}\PYG{+w}{ }\PYG{o}{**}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{variance}\PYG{+w}{ }\PYG{n}{xs}
+\end{Verbatim}
