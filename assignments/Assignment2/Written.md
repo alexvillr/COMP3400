@@ -173,3 +173,91 @@ The third property of variance is that if you multiply some constant with every 
 The final property is that the second and third property can be combined.
 
 ## Question 10
+
+$$\begin{aligned}
+\text{Given that, Plus } m \text{ Zero } & = m \text{ Using PMI, prove that,}\\
+\text{Plus Zero } n & = n 
+\end{aligned}$$
+
+__Base Case__, $n = \text{Zero}$
+
+$$
+\text{Plus Zero n } \implies \text{Plus Zero Zero}
+$$
+
+$$
+\text{Plus Zero Zero } = \text{ Zero}
+$$
+
+This is true as $0 + 0 = 0$ under the naturals.
+
+__Inductive Hypothesis__, $n = k$
+
+Assume that $\text{Plus Zero } k = k$
+        
+__Inductive Step__
+
+for our $k + 1$ case, we are simply using $\text{Succ } k$, to get
+
+$$
+\text{Plus Zero } ( \text{Succ } k ) = \text{Succ } ( \text{Plus Zero } k )
+$$
+
+By definition, and since we have assumed in our inductive hypothesis that $\text{Plus Zero } k = k$ we have
+
+$$
+\text{Plus Zero } ( \text{Succ } k) = \text{Succ } k
+$$
+
+Or in other words,
+
+$$
+0 + (k + 1) = k + 1
+$$
+
+which is true under the natural numbers as well. Thus because of our base case being correct, and our inductive step being correct if we assume that our equation works for some kth step. By the Principle of Mathematical Induction, we know that $\text{Plus Zero n} = n,\ \forall\ n \in \mathbb{N}$
+
+
+## Question 11
+
+Using PMI Prove the commutativity of Plus, that is,
+$$
+\text{Using PMI prove that, Plus}\ m\ n\ = \text{Plus}\ n\ m
+$$
+
+__Base Case__, $n = \text{Zero}$
+
+$$\begin{aligned}
+\text{LHS } & = \text{ Plus m Zero} = m, \text{ By construction}\\
+\text{RHS } & = \text{ Plus Zero m} = m, \text{ From our conclusions in Q10}\\
+\text{LHS } & = \text{ RHS}
+\end{aligned}$$
+    
+
+__Inductive Hypothesis__, $n = k$
+
+Assume that,
+$$
+\text{Plus}\ m\ k = \text{Plus}\ k\ m
+$$
+
+__Inductive Step:__
+
+For our $k + 1$ case, we are using $\text{Succ}\ k$ to represent $k + 1$, if we then let 
+\begin{equation}
+    z = \text{Plus}\ m\ k = \text{Plus}\ k\ m\ (\text{From our inductive hypothesis.})
+\end{equation}
+This gives us
+
+$$\begin{aligned}
+    \text{LHS } & = \text{Plus}\ m\ (\text{Succ}\ k)\\
+        & = \text{Succ}\ (\text{Plus}\ m\ k),\ \text{By definition}\\
+        & = \text{Succ}\ z, \text{From (1)}\\
+    \text{RHS } & = \text{Plus}\ (\text{Succ}\ k)\ m\\
+        & = \text{Plus}\ k\ (\text{Succ}\ m),\ \text{Assuming Plus is associative}\\
+        & = \text{Succ}\ (\text{Plus}\ k\ m)\\
+        & = \text{Succ}\ z, \text{From (1)}\\
+    \text{LHS } & = \text{ RHS, By our Inductive hypothesis}
+\end{aligned}$$
+
+Since our LHS is equal to our RHS under our assumption in our inductive hypothesis. Our base case has been proven true. By the Principle of Mathematical Induction, we have proven that Plus is commutative when we iterate over n. We can see that the converse is also true with a symmetric proof. 
