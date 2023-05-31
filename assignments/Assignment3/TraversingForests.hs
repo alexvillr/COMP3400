@@ -41,10 +41,10 @@ For the following tree,
                       2  1   8
 
 Its traversal or the list of its values will be
-      [3, 4, 1, 7, 2, 1, 8]
-  root  ^ ‘~~~~~~~‘‘~~~~~~~’
-              ^       ^ nodes with depth 2
-          children of root (nodes with depth 1)
+      [3, 4, 2, 1, 1, 8, 7]
+ root  ^ ‘~~~~‘‘~~~~~~~’ 󱞾 right subtree
+                  󱞾 central subtree
+          left subtree
 
 To traverse all values of a Forest, we sequentially traverse the values of its
 trees in the order they appear in the list.
@@ -60,14 +60,14 @@ traverse their values:
 
 	Forest 1: [Tree 2 [Tree 1 [Tree 3 []] ]]
 
-            	2
+                2
                /
               1
              /
             3
 
 	Forest 2: [Tree 2  [Tree 1 [], Tree 3 []]]
-	          2
+	            2
              / \
             1   3
 
@@ -89,4 +89,10 @@ The order of Forests in your answer does not matter.
 --}
 
 forests :: [a] -> [Forest a]
-forests = undefined
+forests [] = [[]] -- Base case: an empty traversal corresponds to a single empty forest
+forests (x : xs) =
+    let subtrees = forests xs -- Generate all possible forests for the remaining traversal
+        splitList [] = [([], [])] -- Helper function to split a list into left and right parts
+        splitList (y : ys) = ([], y : ys) : [(y : ls, rs) | (ls, rs) <- splitList ys]
+        insertIntoForest forest = map (\(ls, rs) -> Tree x ls : rs) (splitList forest) -- Insert the single tree into each forest
+     in concatMap insertIntoForest subtrees

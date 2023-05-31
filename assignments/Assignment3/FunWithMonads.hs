@@ -23,18 +23,14 @@ Implement the following instances:
 --}
 
 instance Functor (Env r1 r2) where
-    fmap :: (a -> b) -> Env r1 r2 a -> Env r1 r2 b
-    fmap = undefined
+    fmap f (Env g) = Env (\r1 r2 -> f (g r1 r2))
 
 instance Applicative (Env r1 r2) where
-    pure :: a -> Env r1 r2 a
-    pure = undefined
-    (<*>) :: Env r1 r2 (a -> b) -> Env r1 r2 a -> Env r1 r2 b
-    (<*>) = undefined
+    pure x = Env (\_ _ -> x)
+    (Env f) <*> (Env g) = Env (\r1 r2 -> (f r1 r2) (g r1 r2))
 
 instance Monad (Env r1 r2) where
-    (>>=) :: Env r1 r2 a -> (a -> Env r1 r2 b) -> Env r1 r2 b
-    (>>=) = undefined
+    (Env g) >>= f = Env (\r1 r2 -> let (Env h) = f (g r1 r2) in h r1 r2)
 
 {--
 Part 2.
@@ -71,13 +67,24 @@ For example,
 --}
 
 proj1 :: (r1 -> a) -> Env r1 r2 a
-proj1 = undefined
+proj1 f = Env (\r1 _ -> f r1)
 
 proj2 :: (r2 -> a) -> Env r1 r2 a
-proj2 = undefined
+proj2 f = Env (\_ r2 -> f r2)
 
 runEnv :: Env r1 r2 a -> (r1 -> r2 -> a)
-runEnv = undefined
+runEnv (Env f) = f
 
 correlation :: Env [Float] [Float] Float
-correlation = undefined
+correlation = do
+    list1 <- proj1 id
+    list2 <- proj2 id
+    let n = length list1
+        sum1 = sum list1
+        sum2 = sum list2
+        sumSquare1 = sum (map (^ 2) list1)
+        sumSquare2 = sum (map (^ 2) list2)
+        sumProd = sum (zipWith (*) list1 list2)
+        numer = fromIntegral n * sumProd - sum1 * sum2
+        denom = sqrt ((fromIntegral n * sumSquare1 - sum1 ^ 2) * (fromIntegral n * sumSquare2 - sum2 ^ 2))
+    return (numer / denom)

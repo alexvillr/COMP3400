@@ -110,4 +110,25 @@ for each test. Bruteforcing up to 10^1000 combinations is probably a bad idea.
 --}
 
 solve :: IO ()
-solve = undefined
+solve = do
+    n <- readLn :: IO Int
+    let guess = replicate n 0 -- Initialize the guess list
+    playGame guess
+
+playGame :: [Int] -> IO ()
+playGame guess = do
+    print guess -- Print the current guess
+    response <- readLn :: IO ([Int], [Int]) -- Read the computer's response
+    if response == ([0 .. length guess - 1], []) -- Check if sequence is guessed
+        then return ()
+        else do
+            let strongMatch = fst response
+                weakMatch = snd response
+                newGuess = updateGuess guess strongMatch weakMatch
+            playGame newGuess
+
+updateGuess :: [Int] -> [Int] -> [Int] -> [Int]
+updateGuess guess strongMatch weakMatch =
+    [ if i `elem` strongMatch then guess !! i else if i `elem` weakMatch then guess !! i else guess !! i + 1
+    | i <- [0 .. length guess - 1]
+    ]
